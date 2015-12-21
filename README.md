@@ -3,13 +3,13 @@ Nigel
 
 Nigel is a small, light, *respectful* Online Personalisation Engine.
 
-Online Personalisation is a technique for displaying different page content (messages, images, adverts etc.) to visitors based upon their behaviour on the site.
+Online Personalisation is a technique for displaying different page content (messages, images, adverts etc.) to visitors based upon their behaviour on a web site.
 
-Most online personalisation engines follow the same model: Collect every scrap of a visitor's data in a big central database, process it on the server and send the results back to the visitor. While this *may* be technically efficient, recent years have highlighted how these large databases of data are open to abuse by surveilance agencies and regularly targeted by criminal hackers.
+Most online personalisation engines follow the same model: Collect every scrap of a visitor's data in a big central database, process it on the server and send the results back to the visitor. While this *may* be technically efficient (I don't necacerily think it is), recent years have highlighted how these large databases of data are open to abuse by surveilance agencies and regularly targeted by criminal hackers.
 
 Nigel is different.
 
-Unlike (probably) every other behaviour driven engine out there, Nigel does not store your data in a centeral database where it can be abused/stolen. Visitor data is only ever collected in the browser's local storage, never anywhere else.
+Unlike (probably) every other behaviour driven engine out there, Nigel does not store your data in a central database where it can be abused/stolen. Visitor data is only ever collected in the browser's local storage, never anywhere else.
 
 This is safer for everyone involved.
 
@@ -19,29 +19,33 @@ How To Use
 
 Personalisation is composed of three parts:
 
-* Segments - Site visitors may be assigned to none, one or more segments depeng upon their behaviur on the site
-* Content - The content to display
-* Placeholders - Sections of the page that may display different content to visitors in different segments
+* Segments - Site visitors may be assigned to none, one or more Segments depending upon their behaviour on the site
+* Content - The Content to display
+* Placeholders - Sections of the page that may display different Content to visitors in different Segments
 
 Segments are defined by specifying a name and a test function. If the test function returns true, the visitor is assigned to the segment, if false they are not. The complete set of visitor data (see below) is passed to the test function, so we can define segments against it.
 
+    // Returning visitors have more than one session
     Nigel.segments.add("returning-visitor", function(d){
         return d.session_count > 1;
     });
 
 Content is regular mark-up defined within `script` tags. It remains "hidden" until displayed in a placeholder.
 
+    <!-- Welcome message for returning visitors -->
     <script id="msg-returning-visitor" type="text/x-nigel-template">
         <h1>Hello Repeat Visitor</h1>
     </script>
 
 Placeholders are defined by specifying the id of an element in the page and an ordered array of mappings between segments and content. If a visitor if assigned to a segment, the corresponding content is displayed in the placeholder. If a visitor is assigned to multiple segments, the content corresponding to the first matching segment is displayed. If a visitor is assigned to no matching segments the existing content in the placeholder is displayed by default. The value for `segment` must match a defined segment and the value for `content` must match the id of a content element.
 
+    <!-- Welcome message placeholder, default message for new visitors -->
     <div id="welcome-message">
         <h1>Hello New Visitor</h1>
     </div>
 
 
+    // Personalise welcome message to returning visitors
     Nigel.placeholders.add("welcome-message", [
         {'segment':"returning-visitor", 'content':"msg-returning-visitor"},
     ]);
@@ -63,8 +67,8 @@ Visitor data is stored in a three-tiered structure. To view the currently stored
       "session_count":2
     }
 
-* `sessions` - An object, where each key is asession id, and each item is a `session` object.
-* `last_session_id`  - The id of the last active session, data is appended to this session if it is still active, if not a new session is created.
+* `sessions` - An object, where each key is a session id and each item is a `session` object.
+* `last_session_id`  - The id of the last active session. Data is appended to this session if it is still active, if not a new session is created.
 * `session_count` - The total number of sessions for this visitor.
 * `total_page_view_count` - The total number of page views across all sessions.
 
@@ -117,7 +121,3 @@ Tests
 -----
 
 Tests use QUnit and can be run by loading `tests.html` in a browser.
-
-
-Limitations
------------
