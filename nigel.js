@@ -2,12 +2,6 @@
 
 var
 
-// An empty function
-noop = function(){},
-
-// Domain of the nigel server
-api_root = '//localhost:8080',
-
 // Script version
 version = "0.0.1",
 
