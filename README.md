@@ -111,7 +111,7 @@ Visitor data is stored in a three-tiered structure. To view the currently stored
     }
 
 * `url` - The full URL of the page
-* `ref_url` - The URL of th ereferral page (if any)
+* `ref_url` - The URL of the referral page (if any)
 * `title` - The title of the page
 * `timestamp` - The time the page was viewed
 * `script_ver` - The version of the Nigel script at the time the page was viewed
