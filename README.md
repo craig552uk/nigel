@@ -25,30 +25,37 @@ Personalisation is composed of three parts:
 
 Segments are defined by specifying a name and a test function. If the test function returns true, the visitor is assigned to the segment, if false they are not. The complete set of visitor data (see below) is passed to the test function, so we can define segments against it.
 
-    // Returning visitors have more than one session
-    Nigel.segments.add("returning-visitor", function(d){
-        return d.session_count > 1;
-    });
+```JavaScript
+// Returning visitors have more than one session
+Nigel.segments.add("returning-visitor", function(d){
+    return d.session_count > 1;
+});
+```
 
 Content is regular mark-up defined within `script` tags. It remains "hidden" until displayed in a placeholder.
 
-    <!-- Welcome message for returning visitors -->
-    <script id="msg-returning-visitor" type="text/x-nigel-template">
-        <h1>Hello Repeat Visitor</h1>
-    </script>
+```HTML
+<!-- Welcome message for returning visitors -->
+<script id="msg-returning-visitor" type="text/x-nigel-template">
+    <h1>Hello Repeat Visitor</h1>
+</script>
+```
 
 Placeholders are defined by specifying the id of an element in the page and an ordered array of mappings between segments and content. If a visitor if assigned to a segment, the corresponding content is displayed in the placeholder. If a visitor is assigned to multiple segments, the content corresponding to the first matching segment is displayed. If a visitor is assigned to no matching segments the existing content in the placeholder is displayed by default. The value for `segment` must match a defined segment and the value for `content` must match the id of a content element.
 
-    <!-- Welcome message placeholder, default message for new visitors -->
-    <div id="welcome-message">
-        <h1>Hello New Visitor</h1>
-    </div>
+```HTML
+<!-- Welcome message placeholder, default message for new visitors -->
+<div id="welcome-message">
+    <h1>Hello New Visitor</h1>
+</div>
+```
 
-
-    // Personalise welcome message to returning visitors
-    Nigel.placeholders.add("welcome-message", [
-        {'segment':"returning-visitor", 'content':"msg-returning-visitor"},
-    ]);
+```JavaScript
+// Personalise welcome message to returning visitors
+Nigel.placeholders.add("welcome-message", [
+    {'segment':"returning-visitor", 'content':"msg-returning-visitor"},
+]);
+```
 
 See `demo.html` for a basic working example.
 
@@ -60,12 +67,14 @@ Visitor data is stored in a three-tiered structure. To view the currently stored
 
 ### Top-Level Object
 
-    {
-      "sessions":{ ... },
-      "last_session_id":"14a2133d",
-      "total_page_view_count":3,
-      "session_count":2
-    }
+```JSON
+{
+  "sessions":{ ... },
+  "last_session_id":"14a2133d",
+  "total_page_view_count":3,
+  "session_count":2
+}
+```
 
 * `sessions` - An object, where each key is a session id and each item is a `session` object.
 * `last_session_id`  - The id of the last active session. Data is appended to this session if it is still active, if not a new session is created.
@@ -74,19 +83,21 @@ Visitor data is stored in a three-tiered structure. To view the currently stored
 
 ### A Session Object
 
-    {
-      "page_views":[ ... ],
-      "sc_color":24,
-      "sc_height":1080,
-      "sc_width":1920,
-      "useragent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36",
-      "lang":"en-GB",
-      "page_view_count":1,
-      "start_time":"2015-12-21T14:44:06.113Z",
-      "end_time":"2015-12-21T14:44:06.113Z",
-      "total_duration":0,
-      "av_time_per_page":0
-    }
+```JSON
+{
+  "page_views":[ ... ],
+  "sc_color":24,
+  "sc_height":1080,
+  "sc_width":1920,
+  "useragent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36",
+  "lang":"en-GB",
+  "page_view_count":1,
+  "start_time":"2015-12-21T14:44:06.113Z",
+  "end_time":"2015-12-21T14:44:06.113Z",
+  "total_duration":0,
+  "av_time_per_page":0
+}
+```
 
 * `page_views` - An array of `page_view` objects
 * `sc_color` - The screen colour
@@ -102,13 +113,15 @@ Visitor data is stored in a three-tiered structure. To view the currently stored
 
 ### A Page View Object
 
-    {
-      "url":"http://localhost:8000/demo.html",
-      "ref_url":"",
-      "title":"Document",
-      "timestamp":"2015-12-21T14:44:06.113Z",
-      "script_ver":"0.0.1"
-    }
+```JSON
+{
+  "url":"http://localhost:8000/demo.html",
+  "ref_url":"",
+  "title":"Document",
+  "timestamp":"2015-12-21T14:44:06.113Z",
+  "script_ver":"0.0.1"
+}
+```
 
 * `url` - The full URL of the page
 * `ref_url` - The URL of the referral page (if any)
