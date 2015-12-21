@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    
+    <!-- Placeholder -->
+    <div id="welcome-message">
+        <h1>Default Hello</h1>
+    </div>
+
+    
+    <!-- Personalised Content -->
+    <script id="msg-new-visitor" type="text/x-nigel-template">
+        <h1>Hello New Visitor</h1>
+    </script>
+
+    <script id="msg-returning-visitor" type="text/x-nigel-template">
+        <h1>Hello Returning Visitor</h1>
+    </script>
+
+
+    <script src="nigel.js"></script>
+    <script>
+        // New visitors have one session
+        Nigel.segments.add("new-visitor", function(d){
+            return d.session_count == 1;
+        });
+
+        // Repeat visitors have several sessions
+        Nigel.segments.add("repeat-visitor", function(d){
+            return d.session_count > 1;
+        });
+
+        // Hero section
+        Nigel.placeholders.add("welcome-message", [
+            {'segment':"repeat-visitor", 'content':"msg-returning-visitor"},
+            {'segment':"new-visitor",    'content':"msg-new-visitor"},
+        ]);
+
+        Nigel.run({
+            debug: true
+        })
+    </script>
+</body>
+</html>
