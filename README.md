@@ -9,7 +9,7 @@ Most online personalisation engines follow the same model: Collect every scrap o
 
 Nigel is different.
 
-Unlike (probably) every other behaviour driven engine out there, Nigel does not store your data in a central database where it can be abused/stolen. Visitor data is only ever collected in the browser's local storage, never anywhere else.
+Unlike every other behaviour driven engine out there, Nigel does not store your data in a central database where it can be abused/stolen. Visitor data is only ever collected in the browser's local storage, never anywhere else.
 
 This is safer for everyone involved.
 
